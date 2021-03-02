@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+
+{% block title %}become_vendor | {% endblock %}
+{% block content %}
+<h1 class="title">Become a vendor</h1>
+<form action="" autocomplete="off" method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button class="btn btn-secondary is-uppercase" type="submit">Sign Up</button>
+</form>
+
+<hr>
+<h2 class="subtitle">Already have an account? <a href="{% url 'login' %}">Log In</a></h2>
+{% endblock %}

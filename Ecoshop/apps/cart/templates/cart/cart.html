@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block title %}cart | {% endblock %}
+{% block content %}
+<h1 class="my-4" style="margin-left:250;"><strong> Order Summery</strong></h1>
+{% if cart %}
+    <div class="container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th><strong>No</strong></th>
+        <th><strong>Product</strong></th>
+          <th><strong>Quantity</strong></th>
+        <th><strong>Price</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+       {% for item in cart %}
+        <tr>
+        <td>{{forloop.counter}}</td>
+            <td><a href="{% url 'product' item.product.category.slug item.product.slug %}"></a> {{item.product.title}}</td>
+        <td>
+            <a href="?change_quantity={{item.id}}&quantity=-1"> <strong style="color:red;font-size:20;">-</strong> </a>
+            {{item.quantity}}
+            <a href="?change_quantity={{item.id}}&quantity=1"> <strong style="color:blue;font-size:18;">+</strong> </a>
+        </td>
+            <td>
+                {{item.product.price}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="?remove_from_cart={{item.id}}" class="delete" style="color:red;">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+      <tfoot>
+      <tr>
+          <td></td>
+          <td><strong>Total Cost</strong></td>
+          <td><strong>Total item(s): {{cart|length}}</strong></td>
+
+          <td colspan="2"><strong>${{cart.get_total_price}}</strong></td></td>
+      </tr>
+       <tr>
+           <td></td>
+           <td></td>
+           <td>
+              <button class="btn btn-primary">
+                  <a href="{% url 'frontpage' %}">Continue Shopping</a>
+                  </button>
+          </td>
+            <td colspan="2">
+              <button class="btn btn-secondary">
+                  <a href="{% url 'checkout' %}">Continue to checkout</a>
+              </button>
+          </td>
+       </tr>
+      </tfoot>
+  </table>
+    </div>
+      {% else %}
+     <h1 class="my-4" style="margin-left:100px;">You do not have any items in your cart yet!</h1><br>
+                  <a href="{% url 'frontpage' %}" style="margin-left:250px;" class="badge badge-secondary">Continue Shopping</a>
+        {% endif %}
+        {% endblock %}

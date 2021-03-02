@@ -1,0 +1,234 @@
+{% extends 'core/base.html' %}
+
+{% block title %}checkout | {% endblock %}
+{% block content %}
+
+<!--Main layout-->
+<main class="">
+    <div class="container wow fadeIn">
+
+        <!-- Heading -->
+        <h2 class="my-5 h2 text-center">Checkout form</h2>
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-8 mb-4">
+
+                <!--Card-->
+                <div class="card">
+                    <!--Card content-->
+                    <form class="card-body" method="post" action="." id="payment-form">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                        <div class="notification is-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        <div class="card-errors">
+                            {% for field in form %}
+                            {% for error in form.errors %}
+                            <li><strong>{{ form.label }}</strong>{{ error }}</li>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                        <!--Grid row-->
+                        <div class="row">
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--firstName-->
+                                <div class="md-form ">
+                                    {{form.first_name}}
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--lastName-->
+                                <div class="md-form ">
+                                    {{form.last_name}}
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                        </div>
+                        <!--Grid row-->
+                       <!--Grid row-->
+                        <div class="row">
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--email-->
+                                <div class="md-form ">
+                                    {{form.email}}
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--address-->
+                                <div class="md-form ">
+                                    {{form.address}}
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                        </div>
+                        <!--Grid row-->
+                        <div class="md-form ">
+                            {{form.phone}}
+                        </div>
+                       <!--Grid row-->
+                        <div class="row">
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--city-->
+                                <div class="md-form ">
+                                    {{form.city}}
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-2">
+                                <!--zip code-->
+                                <div class="md-form ">
+                                    {{form.postal_code}}
+                                </div>
+                            </div>
+                            <!--Grid column-->
+                        </div>
+                        <hr>
+
+                        <div class="custom-control custom-checkbox">
+                            <input {% if from.same_billing_addres.value %}checked{% endif %}  class="custom-control-input" name="same_billing_addres" id="same_billing_addres" type="checkbox">
+                            <label class="custom-control-label" for="same_billing_addres">Shipping address is the same as my
+                                billing address</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input {% if form.save_info.value %}checked{% endif %} class="custom-control-input"
+                                   id="save-info" name="save_info" type="checkbox">
+                            <label class="custom-control-label" for="save-info">Save this information for next
+                                time</label>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-block my-3">
+                            {% for value,name in form.fields.payment_option.choices %}
+                            <div class="custom-control custom-radio">
+                                <input checked class="custom-control-input" id="{{name}}" name="payment_option"
+                                       required type="radio">
+                                <label class="custom-control-label" for="{{name}}">{{name}}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <h3 class="subtitle">Payment Information</h3>
+                        <div class="card-element">
+                            <!-- payment information here-->
+
+                        </div>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <h3 class="notification is-danger">{{messages}}</h3>
+                        {% endfor %}
+                        {% endif %}
+                        <hr class="mb-4">
+                        <button class="button btn-primary btn-lg btn-block" type="submit">Checkout</button>
+                    </form>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-4 mb-4">
+
+                <!-- Heading -->
+                <a href="{% url 'cart' %}" class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Your cart</span>
+                    <span class="badge badge-secondary badge-pill">{% if cart %}{{cart|length}}{% else %}0{% endif %}</span>
+                </a>
+                <!-- Cart.js -->
+                <ul class="list-group mb-3 z-depth-1">
+                    {% if cart %}
+                    {% for item in cart %}
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">{{item.product.title}}</h6>
+                            <small class="text-muted">{{ item.product.description }}</small>
+                        </div>
+                        <span class="text-muted">${{item.product.price}}</span>
+                    </li>
+                     {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <div class="text-success">
+                            <h6 class="my-0">Promo code</h6>
+                            <small>EXAMPLECODE</small>
+                        </div>
+                        <span class="text-success">-${{cart.total_price}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>${{cart.total_price}}</strong>
+                    </li>
+                    {% endif %}
+                </ul>
+                <!-- Cart.js -->
+
+                <!-- Promo code -->
+                <form class="card p-2">
+                    <div class="input-group">
+                        <input aria-describedby="basic-addon2" aria-label="Recipient's username" class="form-control"
+                               placeholder="Promo code" type="text">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary btn-md waves-effect m-0" type="button">Redeem</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Promo code -->
+
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
+
+    </div>
+</main>
+<!--Main layout-->
+
+{% block scripts %}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe=Stripe('{{stripe_pub_key}}');
+    var elements=stripe.elements();
+
+    var card=element.create('card');
+
+    card.mount('#card-element');
+    var form=document.getElementById('payment-form')
+    form.addEventListener('submit',function(event){
+    event.preventDefault();
+
+    stripe.createToken(card).then(function(result){
+    if result.error{
+    var errorElement = document.getElementById('card-errors');
+    errorElement.textContent=result.errorr.message;
+    }else{
+    stripeTokenHandler(result.token)
+    }
+    });
+    });
+    function stripeTokenHandler(token){
+             var from=document.getElementById('payment-form');
+             var hiddenInput=document.createElement('input');
+             hiddenInput.setAttribute('type','hidden');
+             hiddenInput.setAttribute('name','stripe_token');
+             hiddenInput.setAttribbute('value',token.id);
+             form.appendChild(hiddenInput)
+
+             form.submit();
+    }
+
+
+
+</script>
+{% endblock %}
+
+{% endblock %}

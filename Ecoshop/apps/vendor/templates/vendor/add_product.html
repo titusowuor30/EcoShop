@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Add products | {% endblock %}
+{% block content %}
+
+
+<div class="content">
+    <!-- Content -->
+    <div id="content" class="colM">
+
+        <h1>Add product</h1>
+        <div id="content-main">
+            <form enctype="multipart/form-data" method="post" id="product_form" novalidate>
+                {% csrf_token %}
+                {{ form.as_p}}
+                <div class="submit-row">
+                    <input type="submit" value="Save" class="default" name="_save">
+                </div>
+                <script id="django-admin-form-add-constants"
+                        src="/static/admin/js/change_form.js"
+                        data-model-name="product"
+                        async>
+                </script>
+                <script id="django-admin-prepopulated-fields-constants"
+                        src="/static/admin/js/prepopulate_init.js"
+                        data-prepopulated-fields="[]">
+                </script>
+            </form>
+        </div>
+    </div>
+</div>
+    <!-- END Container -->
+    {% endblock %}

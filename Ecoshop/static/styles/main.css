@@ -1,0 +1,40 @@
+
+.navbar{
+text-transform:uppercase;
+}
+.navbar .is-dark{
+background:#444
+}
+
+.footer a{
+margin-bottom:15px;
+display:inline-block;
+color:#444
+}
+
+
+.input, .button{
+border-radius:0;
+}
+
+.product-list-item .box .subtitle{
+margin-bottom:0;
+}
+.product-list-item .box .price{
+color:#888;
+}
+
+@keyframes show-toast{
+0% {bottom -100%;}
+20% {bottom 50%;}
+80% {bottom 50%;}
+100% {bottom -100%;}
+}
+
+.notification.is-toast{
+position:fixed;
+bottom:100%;
+right:20px;
+animation-name:show-toast;
+animation-name:4s;
+}

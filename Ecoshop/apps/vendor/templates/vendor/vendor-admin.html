@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% block title %}vendor-admin | {% endblock %}
+{% block content %}
+  <!--Main layout-->
+<main>
+    <div class="box">
+       <h2 class="my-4 is-uppercase" style="margin-left:250px;text-transform:uppercase;"><strong>{{vendor.name}} account details</strong></h2>
+        <div class="container">
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>Vendor</th>
+        <th>Created By</th>
+        <th>Date Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ vendor.name }}</td>
+        <td>{{ vendor.created_by }}</td>
+          <td>{{ vendor.created_at }}</td>
+          <td><a href="" class=" px0"><i class="far fa-edit fa-lg" style="color:white;">Edit</i></a>
+            </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+    </div>
+    <hr>
+    {% if products %}
+    <h1 class="my-4" style="margin-left:250px;"><strong>My products</strong></h1>
+</table>
+    <div class="container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Date Added</th>
+          <td><button class="button">
+             <a href="{% url 'add_product' %}" class="btn btn-secondary">
+                 <i class="fas fa-plus fa-lg">Add new</i>
+             </a>
+        </button></td>
+      </tr>
+    </thead>
+    <tbody>
+       {% for product in products %}
+        <tr>
+           <td>{{product.title}}</td>
+        <td>{{product.category}}</td>
+        <td>{{product.price}}</td>
+            <td>{{product.date_added}}</td>
+            <td><a href="{% url 'edit_product' product.id %}" class=" px0"><i class="far fa-edit text-primary fa-lg">Edit</i></a>
+            <form action="{% url 'delete_product' product.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit">
+                    <i class="far fa-trash-alt text-danger fa-lg float-right">Delete</i>
+                </button>
+            </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+    {% else %}
+     <h2 class="my-4">You don't have any products yet!</h2>
+        <a href="{% url 'add_product' %}" class="btn btn-primary"><i class="far fa-plus-alt fa-lg">Add Products</i></a>
+    {% endif %}
+</main>
+  <!--Main layout-->
+{% endblock %}

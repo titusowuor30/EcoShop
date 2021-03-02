@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{category.title}} | {% endblock %}
+{% block content %}
+<div class="column is-multiline">
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-0 mt-2 mb-2">
+
+    <!-- Navbar brand -->
+    <span class="navbar-brand">Categories:</span>
+
+    <!-- Collapse button -->
+    <button aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#basicExampleNav" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">All
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            {% for category in menu_categories %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'category' category.slug %}"><strong>{{category.title}}</strong></a>
+            </li>
+            {% endfor %}
+        </ul>
+        <!-- Links -->
+        <form action="{% url 'search' %}" autocomplete="on" class="form-inline" method="get">
+            <div class="md-form my-0">
+                <input aria-label="Search" class="input form-control mr-sm-2" name="query" placeholder="Search"
+                       type="text">
+                <button class="button is-dark is-uppercase"><a href="{% url 'search' %}">Search</a></button>
+            </div>
+        </form>
+    </div>
+    <!-- Collapsible content -->
+</nav>
+<!--Navbar-->
+    <div class="column is-12 has-text-centered mt-2 mb-6">
+        <h2 class="is-size-3" style="margin-top:20px;color:RED;text-decoration:underline;"><strong>{{category.title}}</strong></h2>
+    </div>
+
+    <section class="text-center mb-4">
+
+        <!--Grid row-->
+        <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+            {% for product in category.products.all %}
+            {% include 'product/parts/list_item.html' %}
+            {% endfor %}
+        </div>
+        <!--Grid row-->
+
+    </section>
+
+</div>
+{% endblock %}

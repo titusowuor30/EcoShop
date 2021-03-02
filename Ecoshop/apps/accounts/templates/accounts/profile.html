@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block title %}vendor-admin | {% endblock %}
+{% block content %}
+<main>
+    <div class="box">
+       <h2 class="my-4">{{request.user.username}} profile details</h2>
+    <div class="container">
+       {% for product in my_orders %}
+      <h1 class="my-4">my order items</h1>
+       <p>{{product.items}}</p>
+        <p>{{product.order_date}}</p>
+        {% endfor %}
+</div>
+    </div>
+</main>
+{% endblock %}

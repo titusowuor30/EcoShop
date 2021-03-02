@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block title %}login | {% endblock %}
+{% block content %}
+  <!--Main layout-->
+<main>
+    <h2 class="my-4">Login here</h2>
+    <form action="" method="post" autocomplete="on">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary ">Login</button>
+    </form>
+    <h3 class="my-4">Dont have an account? <a href="{% url 'become-a-vendor' %}">Create account</a></h3>
+</main>
+  <!--Main layout-->
+{% endblock %}

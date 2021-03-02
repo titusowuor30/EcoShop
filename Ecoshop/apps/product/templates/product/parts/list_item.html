@@ -1,0 +1,42 @@
+<!--Grid column-->
+<div class="col-lg-3 col-md-6 mb-4">
+    <!--Card-->
+    <div class="card">
+        <!--Card image-->
+        <div class="view overlay">
+            <img alt="" class="card-img-top"
+                 src="{{product.getImageURL}}">
+            <a>
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+        <!--Card image-->
+        <!--Card content-->
+        <div class="card-body text-center">
+            <!--Category & Title-->
+            <a class="grey-text" href="">
+                <h5>{{product.category}}</h5>
+            </a>
+            <h5>
+                <strong>
+                    <a class="dark-grey-text" href="">{{product.title}}
+                        <span class="badge badge-pill {{ product.get_label_display }}-color">NEW</span>
+                    </a>
+                </strong>
+            </h5>
+            <h4 class="font-weight-bold blue-text">
+                {% if item.discount_price %}
+                <strong>${{product.discount_price}}</strong>
+                {% else %}
+                <strong>${{product.discount_price}}</strong>
+                {% endif %}
+            </h4>
+            <hr>
+            <a class="button is-dark is-uppercase"
+               href="{% url 'product' product.category.slug product.slug %}">View</a>
+        </div>
+        <!--Card content-->
+    </div>
+    <!--Card-->
+</div>
+<!--Grid row-->
