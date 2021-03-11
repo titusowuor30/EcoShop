@@ -54,7 +54,7 @@ def add_product(request,id=0):
         product.vendor = request.user.vendor
         product.slug = slugify(product.title)
         product.save()
-        return redirect('vendor_admin')
+    return redirect('vendor_admin')
 
 
 @login_required
