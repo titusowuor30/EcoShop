@@ -1,3 +1,6 @@
-django
+django 3.1.7
 Pillow
 stripe
+psycopg2
+paypal
+djang0-cryspy-forms
