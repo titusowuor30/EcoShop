@@ -7,7 +7,17 @@ from django.shortcuts import render, redirect
 from .cart import Cart
 from .forms import CheckoutForm
 
+# noinspection PyUnresolvedReferences
 from apps.order.utilities import checkout, notify_customer, notify_vendor
+
+#mpesa
+from django.http import HttpResponse, JsonResponse
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+from . mpesa_credentials import MpesaAccessToken, LipanaMpesaPpassword
+from django.views.decorators.csrf import csrf_exempt
+from .models import MpesaPayment
 
 def cart_detail(request):
     cart = Cart(request)
